@@ -1,0 +1,59 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: #121212;
+  }
+}
+
+.container {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.episode-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style-type: none;
+  padding-left: 16px;
+}
+
+.episode {
+  padding: 24px;
+  background-color: #282828;
+  border-radius: 8px;
+}
+
+.episode-title {
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1.25rem;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.episode time {
+  color: rgba(255, 255, 255, 0.6);
+}
+.episode-ep {
+  margin: 2px;
+}
