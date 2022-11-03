@@ -1,5 +1,11 @@
-import type { NextPage } from "next";
-import { useEpisodesQuery } from "../graphql/episodes.gql";
+import type { GetServerSideProps, NextPage } from "next";
+import {
+  EpisodesDocument,
+  EpisodesQuery,
+  EpisodesQueryVariables,
+  useEpisodesQuery,
+} from "../graphql/episodes.gql";
+import { initUrqlClient } from "../urql/initUrqlClient";
 
 const Home: NextPage = () => {
   const [{ data }] = useEpisodesQuery({
@@ -29,3 +35,27 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { ssrCache, urqlClient } = initUrqlClient(
+    "https://rickandmortyapi.com/graphql"
+  );
+
+  //call episodes query here
+  const results = await urqlClient
+    .query<EpisodesQuery, EpisodesQueryVariables>(EpisodesDocument, {
+      page: 1,
+    })
+    .toPromise();
+
+  if (results.error) {
+    throw new Error(results.error.message);
+  }
+
+  return {
+    props: {
+      //just extract the ssrCache to pass the data to props
+      URQL_DATA: ssrCache?.extractData(),
+    },
+  };
+};
